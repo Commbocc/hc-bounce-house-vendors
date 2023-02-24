@@ -12,7 +12,7 @@ import { vendors } from "../lib/vendors";
       <table class="table">
         <thead>
           <tr>
-            <th>Company Name</th>
+            <th width="50%">Company Name</th>
             <th>Phone Number</th>
             <th>Expiration Date</th>
           </tr>
