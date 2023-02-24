@@ -4,7 +4,7 @@ interface Vendor {
     Name: string;
     PhoneNumber: string;
     ExpirationDate: Date;
-    Section: string;
+    Section: any;
     Status: string;
   };
 }

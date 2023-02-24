@@ -5,35 +5,46 @@ import { vendors } from "../lib/vendors";
 <template>
   <p v-if="!vendors.data.length">There are currently no active vendors.</p>
 
-  <div v-else class="table-responsive">
-    <table class="table">
-      <thead>
-        <tr>
-          <th>Company Name</th>
-          <th>Phone Number</th>
-          <th>Expiration Date</th>
-          <th>Section</th>
-          <th>Status</th>
-        </tr>
-      </thead>
+  <template v-else v-for="(section, i) in vendors.sections" :key="i">
+    <h3>{{ section }}</h3>
 
-      <tbody>
-        <tr v-for="(vendor, i) in vendors.data" :key="i">
-          <td>{{ vendor.fields.Name }}</td>
+    <div class="table-responsive">
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Company Name</th>
+            <th>Phone Number</th>
+            <th>Expiration Date</th>
+          </tr>
+        </thead>
 
-          <td>{{ vendor.fields.PhoneNumber }}</td>
+        <tbody>
+          <tr v-for="(vendor, i) in vendors.data" :key="i">
+            <template
+              v-if="
+                vendor.fields.Status === 'Active' &&
+                vendor.fields.Section === section
+              "
+            >
+              <td>
+                {{ vendor.fields.Name }}
+              </td>
 
-          <td>
-            {{
-              new Date(vendor.fields.ExpirationDate).toLocaleDateString("en-US")
-            }}
-          </td>
+              <td>
+                {{ vendor.fields.PhoneNumber }}
+              </td>
 
-          <td>{{ vendor.fields.Section }}</td>
-
-          <td>{{ vendor.fields.Status }}</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
+              <td>
+                {{
+                  new Date(vendor.fields.ExpirationDate).toLocaleDateString(
+                    "en-US",
+                  )
+                }}
+              </td>
+            </template>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </template>
 </template>

@@ -4,9 +4,11 @@ import airtable from "./airtable";
 export const vendors = reactive<{
   loading: boolean;
   data: Vendor[];
+  sections: Vendor[];
 }>({
   loading: true,
   data: [],
+  sections: [],
 });
 
 export async function fetchVendors() {
@@ -19,6 +21,12 @@ export async function fetchVendors() {
     });
 
     vendors.data = data.records;
+
+    data.records.forEach((vendor: any) => {
+      vendors.sections.push(vendor.fields.Section);
+    });
+
+    vendors.sections = [...new Set(vendors.sections)];
   } catch (error) {
     console.error(error);
   } finally {
