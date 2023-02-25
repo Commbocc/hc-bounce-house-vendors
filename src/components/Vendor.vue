@@ -1,11 +1,11 @@
 <script setup lang="ts">
-import { vendors } from "../lib/vendors";
+import { vendors, sections } from '../lib/vendors'
 </script>
 
 <template>
   <p v-if="!vendors.data.length">There are currently no active vendors.</p>
 
-  <template v-else v-for="(section, i) in vendors.sections" :key="i">
+  <template v-else v-for="(section, i) in sections" :key="i">
     <h3>{{ section }}</h3>
 
     <div class="table-responsive">
@@ -19,13 +19,13 @@ import { vendors } from "../lib/vendors";
         </thead>
 
         <tbody>
-          <tr v-for="(vendor, i) in vendors.data" :key="i">
-            <template
-              v-if="
-                vendor.fields.Status === 'Active' &&
-                vendor.fields.Section === section
-              "
-            >
+          <tr
+            v-for="vendor in vendors.data.filter(
+              (v) => v.fields.Section === section
+            )"
+            :key="vendor.id"
+          >
+            <template v-if="vendor.fields.Status === 'Active'">
               <td>
                 {{ vendor.fields.Name }}
               </td>
@@ -36,9 +36,7 @@ import { vendors } from "../lib/vendors";
 
               <td>
                 {{
-                  new Date(vendor.fields.ExpirationDate).toLocaleDateString(
-                    "en-US",
-                  )
+                  new Date(vendor.fields.ExpirationDate).toLocaleDateString()
                 }}
               </td>
             </template>
