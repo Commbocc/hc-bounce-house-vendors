@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { vendors, sections } from '../lib/vendors'
+import { vendors, sections } from "../lib/vendors";
 </script>
 
 <template>
@@ -21,25 +21,22 @@ import { vendors, sections } from '../lib/vendors'
         <tbody>
           <tr
             v-for="vendor in vendors.data.filter(
-              (v) => v.fields.Section === section
+              (v) =>
+                v.fields.Section === section && v.fields.Status === 'Active',
             )"
             :key="vendor.id"
           >
-            <template v-if="vendor.fields.Status === 'Active'">
-              <td>
-                {{ vendor.fields.Name }}
-              </td>
+            <td>
+              {{ vendor.fields.Name }}
+            </td>
 
-              <td>
-                {{ vendor.fields.PhoneNumber }}
-              </td>
+            <td>
+              {{ vendor.fields.PhoneNumber }}
+            </td>
 
-              <td>
-                {{
-                  new Date(vendor.fields.ExpirationDate).toLocaleDateString()
-                }}
-              </td>
-            </template>
+            <td>
+              {{ new Date(vendor.fields.ExpirationDate).toLocaleDateString() }}
+            </td>
           </tr>
         </tbody>
       </table>
