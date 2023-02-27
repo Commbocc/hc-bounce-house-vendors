@@ -1,35 +1,31 @@
-import { reactive } from "vue";
-import airtable from "./airtable";
+import { computed, reactive } from 'vue'
+import airtable from './airtable'
 
 export const vendors = reactive<{
-  loading: boolean;
-  data: Vendor[];
-  sections: Vendor[];
+  loading: boolean
+  data: Vendor[]
 }>({
   loading: true,
   data: [],
-  sections: [],
-});
+})
 
 export async function fetchVendors() {
-  vendors.loading = true;
+  vendors.loading = true
   try {
-    const { data } = await airtable.get("/tbl8lusORSdSiVCNU", {
+    const { data } = await airtable.get('/tbl8lusORSdSiVCNU', {
       params: {
-        view: "Grid view",
+        view: 'Grid view',
       },
-    });
+    })
 
-    vendors.data = data.records;
-
-    data.records.forEach((vendor: any) => {
-      vendors.sections.push(vendor.fields.Section);
-    });
-
-    vendors.sections = [...new Set(vendors.sections)];
+    vendors.data = data.records
   } catch (error) {
-    console.error(error);
+    console.error(error)
   } finally {
-    vendors.loading = false;
+    vendors.loading = false
   }
 }
+
+export const sections = computed(() =>
+  [...new Set(vendors.data.map((v) => v.fields.Section))].sort()
+)
