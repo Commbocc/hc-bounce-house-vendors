@@ -6,7 +6,7 @@ fetchVendors();
 
 const containerClass = import.meta.env.DEV
   ? "py-5 container"
-  : "container-fluid";
+  : "container-fluid pt-2";
 </script>
 
 <template>
