@@ -1,10 +1,7 @@
 interface Vendor {
-  id: string
-  fields: {
-    Name: string
-    PhoneNumber: string
-    ExpirationDate: string
-    Section: string
-    Status: string
-  }
+  uid: string;
+  title: string;
+  phone_number: string;
+  expiration_date: string;
+  section: string;
 }
