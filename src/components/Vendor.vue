@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { vendors, sections, activeBySection } from "../lib/vendors";
+import { vendors, sections, sortBySection } from "../lib/vendors";
 </script>
 
 <template>
@@ -8,7 +8,7 @@ import { vendors, sections, activeBySection } from "../lib/vendors";
   <template v-else v-for="(section, i) in sections" :key="i">
     <h3>{{ section }}</h3>
 
-    <div v-if="activeBySection[section]?.length" class="table-responsive">
+    <div class="table-responsive">
       <table class="table table-striped table-hover">
         <thead>
           <tr>
@@ -19,7 +19,7 @@ import { vendors, sections, activeBySection } from "../lib/vendors";
         </thead>
 
         <tbody>
-          <tr v-for="vendor in activeBySection[section]" :key="vendor.uid">
+          <tr v-for="vendor in sortBySection[section]" :key="vendor.uid">
             <td>
               {{ vendor.title }}
             </td>
@@ -37,7 +37,5 @@ import { vendors, sections, activeBySection } from "../lib/vendors";
         </tbody>
       </table>
     </div>
-
-    <p v-else>There are currently no active vendors.</p>
   </template>
 </template>

@@ -12,7 +12,8 @@ export const vendors = reactive<{
 export async function fetchVendors() {
   vendors.loading = true;
   try {
-    const data = await api.get<{ entries: Vendor[] }>("/entries?asc=title");
+    const data = await api.get<{ entries: Vendor[] }>();
+
     vendors.data = data.entries;
   } catch (error) {
     console.error(error);
@@ -25,16 +26,11 @@ export const sections = computed(() =>
   [...new Set(vendors.data.map((v) => v.section))].sort(),
 );
 
-const isActive = (vendor: Vendor) =>
-  vendor.expiration_date > new Date().toISOString();
-
-export const activeBySection = computed(() => {
+export const sortBySection = computed(() => {
   const map: Record<string, Vendor[]> = {};
 
   for (const section of sections.value) {
-    map[section] = vendors.data.filter(
-      (v) => v.section === section && isActive(v),
-    );
+    map[section] = vendors.data.filter((v) => v.section === section);
   }
 
   return map;
