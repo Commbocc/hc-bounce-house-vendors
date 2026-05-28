@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { vendors, sections } from "../lib/vendors";
+import { vendors, sections, sortBySection } from "../lib/vendors";
 </script>
 
 <template>
@@ -9,33 +9,29 @@ import { vendors, sections } from "../lib/vendors";
     <h3>{{ section }}</h3>
 
     <div class="table-responsive">
-      <table class="table">
+      <table class="table table-striped table-hover">
         <thead>
           <tr>
-            <th width="50%">Company Name</th>
+            <th>Company Name</th>
             <th>Phone Number</th>
             <th>Expiration Date</th>
           </tr>
         </thead>
 
         <tbody>
-          <tr
-            v-for="vendor in vendors.data.filter(
-              (v) =>
-                v.fields.Section === section && v.fields.Status === 'Active',
-            )"
-            :key="vendor.id"
-          >
+          <tr v-for="vendor in sortBySection[section]" :key="vendor.uid">
             <td>
-              {{ vendor.fields.Name }}
+              {{ vendor.title }}
             </td>
 
             <td>
-              {{ vendor.fields.PhoneNumber }}
+              <a :href="`tel:${vendor.phone_number}`">{{
+                vendor.phone_number
+              }}</a>
             </td>
 
             <td>
-              {{ new Date(vendor.fields.ExpirationDate).toLocaleDateString() }}
+              {{ new Date(vendor.expiration_date).toLocaleDateString() }}
             </td>
           </tr>
         </tbody>
